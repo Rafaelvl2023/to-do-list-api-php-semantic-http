@@ -8,8 +8,8 @@ $user = 'root';
 $password = '';
 
 try {
-    $conection = new PDO("mysql:host=$host;port=$port;dbname=$dbName;charset=utf8", $user, $password);
-    $conection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $connection = new PDO("mysql:host=$host;port=$port;dbname=$dbName;charset=utf8", $user, $password);
+    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $error) {
     echo 'Erro na conexão com o banco de dados: ' . $error->getMessage();
 }
