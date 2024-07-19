@@ -55,7 +55,7 @@ if($_SERVER['REQUEST_METHOD'] === 'PATCH'){
     //Exceção e Erro
     try {
         //stmt = declaração
-        $stmt = $connection->prepare('UPDATE tasks SET completed = 1 WHERE id = : id');
+        $stmt = $connection->prepare('UPDATE tasks SET completed = 1 WHERE id = :id');
         $stmt->bindParam(':id', $taskId);
         $stmt->execute();
         echo json_encode(['sucess' => true]);
