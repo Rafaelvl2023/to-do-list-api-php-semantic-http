@@ -28,13 +28,37 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $title = $data['title'];
 
-    //Exeção e Erro
+    //Exceção e Erro
     try {
         //stmt = declaração
         $stmt = $connection->prepare('INSERT INTO tasks (title) VALUES (:title)');
         $stmt->bindParam(':title', $title);
         $stmt->execute();
         $taskId = $connection->lastInsertId();
+    } catch(PDOException $error){
+        echo json_encode(['error' => $error->getMessage()]);
+    }
+}
+
+//Rota para marcar uma tarefa como concluída
+if($_SERVER['REQUEST_METHOD'] === 'PATCH'){
+    $data = json_decode(file_get_contents('php://input'), true);
+
+    //Verifica se o ID não esta vazio
+    if(empty($data['id'])){
+        echo json_encode(['error' => 'O ID não pode ser vazio']);
+        exit;
+    }
+
+    $taskId = $data['id'];
+
+    //Exceção e Erro
+    try {
+        //stmt = declaração
+        $stmt = $connection->prepare('UPDATE tasks SET completed = 1 WHERE id = : id');
+        $stmt->bindParam(':id', $taskId);
+        $stmt->execute();
+        echo json_encode(['sucess' => true]);
     } catch(PDOException $error){
         echo json_encode(['error' => $error->getMessage()]);
     }
