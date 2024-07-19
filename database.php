@@ -1,10 +1,11 @@
+
 <?php
 
 $host = 'localhost';
 $dbName = 'api';
 $port = 3306;
 $user = 'root';
-$password = 'root';
+$password = '';
 
 try {
     $conection = new PDO("mysql:host=$host;port=$port;dbname=$dbName;charset=utf8", $user, $password);
