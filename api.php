@@ -63,3 +63,24 @@ if($_SERVER['REQUEST_METHOD'] === 'PATCH'){
         echo json_encode(['error' => $error->getMessage()]);
     }
 }
+
+// Rota para deletar uma tarefa
+if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    $data = json_decode(file_get_contents('php://input'), true);
+
+    if (empty($data['id'])) {
+        echo json_encode(['error' => 'O ID da tarefa é obrigatório']);
+        exit;
+    }
+
+    $taskId = $data['id'];
+
+    try {
+        $stmt = $connection->prepare('DELETE FROM tasks WHERE id = :id');
+        $stmt->bindParam(':id', $taskId);
+        $stmt->execute();
+        echo json_encode(['success' => true]);
+    } catch(PDOException $error) {
+        echo json_encode(['error' => $error->getMessage()]);
+    }
+}
